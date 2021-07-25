@@ -1,0 +1,40 @@
+.preview-content {
+  width: 375px;
+  height: 667px;
+  background-color: #fff;
+  position: relative;
+  margin: 30px auto;
+  user-select: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &_mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    outline: 10000px solid rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+  }
+  .comp-wrap {
+    height: 100%;
+  }
+  .comp-seleted {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border: 1px dashed red;
+    }
+  }
+  .react-draggable {
+    outline: 1px dashed yellowgreen;
+  }
+  .comp-fix-seleted {
+    outline: 1px dashed red;
+  }
+}
