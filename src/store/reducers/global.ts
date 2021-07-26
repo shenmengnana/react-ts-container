@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../index';
-const sizeKeyArr = ['width', 'height'];
 const positionKeyArr = ['x', 'y'];
 
 export interface objectAny {
@@ -138,14 +137,14 @@ export const update =
   (dispatch, getState) => {
     console.log('update', info);
     let key = Object.keys(info)[0];
-    let updateType = sizeKeyArr.includes(key) ? 'size' : positionKeyArr.includes(key) ? 'position' : '';
+    let updateType = positionKeyArr.includes(key) ? 'position' : 'style';
     const {selectObj, compFixJson, pageJson} = getState().global;
     if (selectObj.compType === 'fix') {
       let list = JSON.parse(JSON.stringify(compFixJson));
       let current = list[selectObj.index];
       let style = current.style;
       let position = current.position;
-      if (updateType === 'size') {
+      if (updateType === 'style') {
         style = {
           ...style,
           ...info,
@@ -172,7 +171,7 @@ export const update =
       let list = JSON.parse(JSON.stringify(pageJson));
       let current = list[selectObj.index];
       let style = current.style;
-      if (updateType === 'size') {
+      if (updateType === 'style') {
         style = {
           ...style,
           ...info,
@@ -186,6 +185,8 @@ export const update =
           ...info,
         };
       }
+      console.log('style', style);
+
       current.style = style;
       list[selectObj.index] = current;
       dispatch(setPageJson(list));
