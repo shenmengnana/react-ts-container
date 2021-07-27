@@ -80,7 +80,7 @@ const PreviewContent: FC = () => {
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided: any, snapshot: any) => (
-            <div ref={provided.innerRef} style={{backgroundColor: snapshot.isDraggingOver ? 'lightblue' : ''}} {...provided.droppableProps}>
+            <div ref={provided.innerRef} style={{backgroundColor: snapshot.isDraggingOver ? 'rgba(64,169,255,.4)' : ''}} {...provided.droppableProps}>
               {pageJson.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided: any, snapshot: any) => (
