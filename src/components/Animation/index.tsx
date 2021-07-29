@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Button, Space, Collapse} from 'antd';
 import './index.less';
+import AnimationOption from './animate-option';
 const {Panel} = Collapse;
 
 const Animation: FC = () => {
@@ -13,16 +14,10 @@ const Animation: FC = () => {
       </Space>
       <Collapse defaultActiveKey={['1']} bordered={false} onChange={panelChange} className="collapse-cont">
         <Panel header="This is panel header 1" key="1">
-          <p>1111</p>
-        </Panel>
-        <Panel header="This is panel header 2" key="2">
-          <p>2222</p>
-        </Panel>
-        <Panel header="This is panel header 3" key="3">
-          <p>3333</p>
+          <p>111</p>
         </Panel>
       </Collapse>
-      ,
+      <AnimationOption></AnimationOption>
     </div>
   );
 };
