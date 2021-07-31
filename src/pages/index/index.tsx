@@ -2,10 +2,10 @@ import React, {FC, useEffect, useState} from 'react';
 import {Layout} from 'antd';
 import './index.less';
 import 'normalize.css';
-import CusHeader from '@/components/CusHeader';
-import ComponentsLib from '@/components/CompLibs';
-import PreviewContent from '@/components/PreviewContent';
-import AttributeContent from '@/components/AttributeContent';
+import CusHeader from '@/components/custom-header';
+import ComponentsLib from '@/components/comp-libs';
+import PreviewContent from '@/components/preview-content';
+import AttributeContent from '@/components/attribute-content';
 const {Header, Sider, Content} = Layout;
 
 const Index: FC = () => {
