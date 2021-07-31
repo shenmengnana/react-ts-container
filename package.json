@@ -14,6 +14,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
     "ahooks": "^2.10.9",
+    "animate.css": "^4.1.1",
     "antd": "^4.16.5",
     "craco-antd": "^1.19.0",
     "craco-less": "^1.17.1",

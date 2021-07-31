@@ -3,21 +3,35 @@ import animateCssData from '@/utils/animateCssData';
 import {Tabs} from 'antd';
 const {TabPane} = Tabs;
 const AnimateOption = () => {
-  const tabChange = () => {};
-  const onMouseEnter = (e: React.MouseEvent) => {
-    console.log(1111, e);
+  const [tabIndex, settabIndex] = useState('0');
+  const [hoverIndex, sethoverIndex] = useState(-1);
+  const tabChange = (e: string) => {
+    settabIndex(e);
   };
-  const onMouseLeave = (e: React.MouseEvent) => {
-    console.log('leave', e);
+  const onMouseEnter = (e: React.MouseEvent, index: number) => {
+    console.log('enter', e, index);
+    sethoverIndex(index);
+  };
+  const onMouseLeave = (e: React.MouseEvent, index: number) => {
+    console.log('leave', e, index);
+    sethoverIndex(-1);
   };
   return (
     <div className="animate-option">
-      <Tabs defaultActiveKey="0" onChange={tabChange}>
+      <Tabs defaultActiveKey={tabIndex} onChange={tabChange}>
         {animateCssData.map((list, index) => (
           <TabPane tab={list.label} key={index} className="flex flex-wrap">
-            {list.children.map(item => (
-              <div className="list-item" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-                <div className="list-item_box"></div>
+            {list.children.map((item, index) => (
+              <div
+                className="list-item"
+                onMouseEnter={e => {
+                  onMouseEnter(e, index);
+                }}
+                onMouseLeave={e => {
+                  onMouseLeave(e, index);
+                }}
+              >
+                <div className={`list-item_box ${hoverIndex === index ? `animate__${item.value} animate__animated` : ''}`}></div>
                 <div className="list-item_title">{item.label}</div>
               </div>
             ))}

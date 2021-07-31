@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Index from './pages/index/index';
 import {Provider} from 'react-redux';
 import store from './store';
+import 'animate.css';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
