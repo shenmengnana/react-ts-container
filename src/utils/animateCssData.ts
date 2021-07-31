@@ -1,4 +1,4 @@
-export interface animateCssChilrenType {
+export interface AnimateCssChilrenType {
   label: string;
   value: string;
 }

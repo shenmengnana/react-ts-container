@@ -1,21 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import animateCssData from '@/utils/animateCssData';
+import animateCssData, {AnimateCssChilrenType} from '@/utils/animateCssData';
 import {Tabs} from 'antd';
+import './index.less';
+interface AnimateOptionProps {
+  add: (key: AnimateCssChilrenType) => void;
+}
 const {TabPane} = Tabs;
-const AnimateOption = () => {
+const AnimateOption = ({add}: AnimateOptionProps) => {
   const [tabIndex, settabIndex] = useState('0');
   const [hoverIndex, sethoverIndex] = useState(-1);
   const tabChange = (e: string) => {
     settabIndex(e);
   };
-  const onMouseEnter = (e: React.MouseEvent, index: number) => {
-    console.log('enter', e, index);
+  const onMouseEnter = (index: number) => {
     sethoverIndex(index);
   };
-  const onMouseLeave = (e: React.MouseEvent, index: number) => {
-    console.log('leave', e, index);
+  const onMouseLeave = () => {
     sethoverIndex(-1);
   };
+
   return (
     <div className="animate-option">
       <Tabs defaultActiveKey={tabIndex} onChange={tabChange}>
@@ -24,11 +27,12 @@ const AnimateOption = () => {
             {list.children.map((item, index) => (
               <div
                 className="list-item"
-                onMouseEnter={e => {
-                  onMouseEnter(e, index);
+                onMouseEnter={() => {
+                  onMouseEnter(index);
                 }}
-                onMouseLeave={e => {
-                  onMouseLeave(e, index);
+                onMouseLeave={onMouseLeave}
+                onClick={() => {
+                  add(item);
                 }}
               >
                 <div className={`list-item_box ${hoverIndex === index ? `animate__${item.value} animate__animated` : ''}`}></div>

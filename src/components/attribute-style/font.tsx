@@ -28,8 +28,6 @@ const PopoverColor: React.FC<PopoverColorProps> = ({value, onChange}) => {
 const Font = () => {
   const [color, setColor] = useState({r: 0, g: 0, b: 0, a: 1});
   const handleChange = (color: colorType) => {
-    console.log(111, color);
-
     setColor(color.rgb);
   };
   const normColor = (e: any) => {
