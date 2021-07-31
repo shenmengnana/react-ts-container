@@ -9,7 +9,7 @@ const AttributeContent: FC = () => {
   const tabChange = () => {};
   return (
     <div className="attribute-content">
-      <Tabs defaultActiveKey="1" onChange={tabChange}>
+      <Tabs defaultActiveKey="2" onChange={tabChange}>
         <TabPane tab="属性" key="1">
           <AttributeStyle></AttributeStyle>
         </TabPane>

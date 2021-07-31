@@ -1,22 +1,20 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Button, Space, Collapse} from 'antd';
+import {Button, Space, Divider} from 'antd';
 import './index.less';
 import AnimationOption from './animate-option';
-const {Panel} = Collapse;
+import AnimateList from './animate-list';
 
 const Animation: FC = () => {
-  const panelChange = () => {};
+  const [animateList, setanimateList] = useState([{label: '向左进入', value: 'fadeInLeft'}]);
   return (
     <div className="animation">
       <Space size={20}>
         <Button type="primary">+添加动画</Button>
         <Button>预览动画</Button>
       </Space>
-      <Collapse defaultActiveKey={['1']} bordered={false} onChange={panelChange} className="collapse-cont">
-        <Panel header="This is panel header 1" key="1">
-          <p>111</p>
-        </Panel>
-      </Collapse>
+      <Divider></Divider>
+      <AnimateList list={animateList}></AnimateList>
+
       <AnimationOption></AnimationOption>
     </div>
   );

@@ -1,3 +1,7 @@
+export interface animateCssChilrenType {
+  label: string;
+  value: string;
+}
 let animateCssClassName = [
   {
     label: '进入',
