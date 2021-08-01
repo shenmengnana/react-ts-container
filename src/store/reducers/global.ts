@@ -185,8 +185,6 @@ export const update =
           ...info,
         };
       }
-      console.log('style', style);
-
       current.style = style;
       list[selectObj.index] = current;
       dispatch(setPageJson(list));
