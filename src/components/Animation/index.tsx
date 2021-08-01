@@ -5,36 +5,44 @@ import './index.less';
 import AnimationOption from './animate-option/index';
 import AnimateList from './animate-list';
 import {AddAnimateListProps, AnimateChilrenType} from './index.d';
+import {useAppSelector, useAppDispatch} from '@/store';
+import {update, setSelectObj} from '@/store/reducers/global';
 const initAnimationInfo = {
   duration: 0.5,
   count: 1,
   delay: 0,
 };
 const Animation: FC = () => {
-  const [animateList, setanimateList] = useState([] as Array<AddAnimateListProps>);
+  // const [animateList, setanimateList] = useState([] as Array<AddAnimateListProps>);
   const [visibleAnimate, setvisibleAnimate] = useBoolean();
+  const dispatch = useAppDispatch();
+  const selectObj = useAppSelector(state => state.global.selectObj);
+  const {animateList} = selectObj;
   const animateListRef = useRef<any>();
   const addAniamte = (item: AnimateChilrenType) => {
     let list = [...animateList];
     list.push({
       ...item,
-      animationInfo: {...initAnimationInfo},
+      ...initAnimationInfo,
     });
-    setanimateList(list);
+    dispatch(setSelectObj({...selectObj, animateList: list}));
+    dispatch(update({animateList: list}));
     setvisibleAnimate.setFalse();
   };
   const updateAnimate = (info: any, i: number) => {
     let list = [...animateList];
-    list[i].animationInfo = {
-      ...list[i].animationInfo,
+    list[i] = {
+      ...list[i],
       ...info,
     };
-    setanimateList(list);
+    dispatch(setSelectObj({...selectObj, animateList: list}));
+    dispatch(update({animateList: list}));
   };
   const delAnimate = (i: number) => {
     let list = [...animateList];
     list.splice(i, 1);
-    setanimateList(list);
+    dispatch(setSelectObj({...selectObj, animateList: list}));
+    dispatch(update({animateList: list}));
   };
   const previewAnimate = () => {
     animateListRef.current?.runAllAnimate();

@@ -22,7 +22,7 @@ const Index: FC = () => {
           <Content>
             <PreviewContent></PreviewContent>
           </Content>
-          <Sider width={400}>
+          <Sider width={400} style={{overflow: 'hidden'}}>
             <AttributeContent></AttributeContent>
           </Sider>
         </Layout>

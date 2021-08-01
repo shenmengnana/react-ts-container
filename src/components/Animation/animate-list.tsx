@@ -4,12 +4,12 @@ import './index.less';
 import {CaretRightOutlined, DeleteOutlined} from '@ant-design/icons';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {update} from '@/store/reducers/global';
-import {AddAnimateListProps, AnimateChilrenType} from './index.d';
+import {AnimateListType, AnimateChilrenType} from '@/store/reducers/index.d';
 import {sleep} from '@/utils';
 const {Panel} = Collapse;
 
 interface AnimateListProps {
-  list: Array<AddAnimateListProps>;
+  list: Array<AnimateListType>;
   onUpdate: (e: any, i: number) => void;
   onDel: HeaderProps['onDel'];
 }
@@ -59,22 +59,22 @@ const AnimateList = forwardRef<HTMLDivElement, AnimateListProps>((props, ref) =>
     setactiveIndex(key);
   };
   const animatePlay = async (index: number) => {
-    const {animationInfo, value} = list[index];
-    if (animationInfo.duration <= 0 || animationInfo.count === 0 || isAnimating.current) return Promise.resolve();
+    const {duration, count, delay, value} = list[index];
+    if (duration <= 0 || count === 0 || isAnimating.current) return Promise.resolve();
     isAnimating.current = true;
     let animateInfo = {
       animationName: value,
-      animationDuration: `${animationInfo.duration}s`,
-      animationIterationCount: animationInfo.count === -1 ? 'infinite' : animationInfo.count,
-      animationDelay: `${animationInfo.delay}s`,
+      animationDuration: `${duration}s`,
+      animationIterationCount: count === -1 ? 'infinite' : count,
+      animationDelay: `${delay}s`,
       animationFillMode: 'both',
     };
     dispatch(update(animateInfo));
-    if (animationInfo.count === -1) {
+    if (count === -1) {
       isAnimating.current = false;
       return Promise.resolve();
     }
-    await sleep((animationInfo.duration + animationInfo.delay) * 1000);
+    await sleep((duration + delay) * 1000);
     dispatch(
       update({
         animationName: '',
@@ -98,7 +98,7 @@ const AnimateList = forwardRef<HTMLDivElement, AnimateListProps>((props, ref) =>
     if (list.length === 0) return;
     setactiveIndex('' + (list.length - 1));
     animatePlay(list.length - 1);
-  }, [list]);
+  }, [list.length]);
   useImperativeHandle<HTMLDivElement, any>(ref, () => ({
     runAllAnimate() {
       if (isAllAnimating.current) return;
@@ -117,7 +117,7 @@ const AnimateList = forwardRef<HTMLDivElement, AnimateListProps>((props, ref) =>
                 onValuesChange={e => {
                   onUpdate(e, index);
                 }}
-                initialValues={item.animationInfo}
+                initialValues={item}
               >
                 <Form.Item label="动画时长" name="duration" initialValue={1}>
                   <InputNumber step={0.1} min={0.1}></InputNumber>

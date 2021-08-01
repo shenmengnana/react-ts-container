@@ -1,44 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../index';
+import {PageJsonState, SelectObjType, ObjectAny} from './index.d';
 const positionKeyArr = ['x', 'y'];
-
-export interface objectAny {
-  [key: string]: any;
-}
-export interface PageJsonState {
-  id: string;
-  type: string;
-  value: string;
-  position: {
-    x: number;
-    y: number;
-  };
-  style: {
-    width: number;
-    height: number;
-    [key: string]: any;
-  };
-}
-export interface RndUpdateType {
-  type: string;
-  value: object;
-}
-export interface SelectObjType {
-  compType: string; // static  fix
-  index: number;
-  id: string;
-  type: string;
-  value: string;
-  position: {
-    x: number;
-    y: number;
-  };
-  style: {
-    width: number;
-    height: number;
-    [key: string]: any;
-  };
-}
+const firstAttrKeyArr = ['value', 'animateList'];
 interface initStateType {
   selectIndex: number;
   pageJson: Array<PageJsonState>;
@@ -66,6 +30,7 @@ const initialState: initStateType = {
       x: 0,
       y: 0,
     },
+    animateList: [],
   },
 };
 
@@ -133,11 +98,11 @@ export const setSelectIndexFix =
   };
 
 export const update =
-  (info: objectAny): AppThunk =>
+  (info: ObjectAny): AppThunk =>
   (dispatch, getState) => {
     console.log('update', info);
     let key = Object.keys(info)[0];
-    let updateType = positionKeyArr.includes(key) ? 'position' : 'style';
+    let updateType = firstAttrKeyArr.includes(key) ? 'firstAttr' : positionKeyArr.includes(key) ? 'position' : 'style';
     const {selectObj, compFixJson, pageJson} = getState().global;
     if (selectObj.compType === 'fix') {
       let list = JSON.parse(JSON.stringify(compFixJson));

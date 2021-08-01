@@ -8,12 +8,13 @@ import TextInput from './text-input';
 import ImgInput from './img-input';
 import Font from './font';
 import {useAppSelector, useAppDispatch} from '@/store';
-import {setPageJson, setCompFixJson, update, objectAny, SelectObjType} from '@/store/reducers/global';
+import {setPageJson, setCompFixJson, update} from '@/store/reducers/global';
+import {ObjectAny, SelectObjType} from '@/store/reducers/index.d';
 import {useDebounceFn} from 'ahooks';
 const AttributeStyle: FC = () => {
   const [imgSrc, setimgSrc] = useState('');
   const dispatch = useAppDispatch();
-  const selectObj = useAppSelector(state => state.global['selectObj']);
+  const selectObj = useAppSelector(state => state.global.selectObj);
   const [form] = Form.useForm();
   const attributeChange = useDebounceFn(
     (e: SelectObjType) => {
@@ -27,7 +28,7 @@ const AttributeStyle: FC = () => {
     {wait: 500},
   );
   useEffect(() => {
-    let position: objectAny = JSON.parse(JSON.stringify(selectObj.position || {}));
+    let position: ObjectAny = JSON.parse(JSON.stringify(selectObj.position || {}));
     if (selectObj.compType === 'static') {
       position.x = selectObj.style.marginLeft || 0;
       position.y = selectObj.style.marginTop || 0;

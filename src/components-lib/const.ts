@@ -12,6 +12,7 @@ const compInitMap: ObjAnyType = {
       textAlign: 'center',
     },
     position: {x: 0, y: 0},
+    animateList: [],
   },
   img: {
     type: 'img',
@@ -21,6 +22,7 @@ const compInitMap: ObjAnyType = {
       height: 'auto',
     },
     position: {x: 0, y: 0},
+    animateList: [],
   },
   fix: {
     type: 'fix',
@@ -30,6 +32,7 @@ const compInitMap: ObjAnyType = {
       width: 100,
       height: 100,
     },
+    animateList: [],
   },
   absolute: {
     type: 'absolute',
@@ -40,6 +43,7 @@ const compInitMap: ObjAnyType = {
       width: 150,
       height: 150,
     },
+    animateList: [],
   },
 };
 
