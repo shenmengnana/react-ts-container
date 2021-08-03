@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState, AppThunk} from '../index';
-import {PageJsonState, SelectObjType, ObjectAny} from './index.d';
+import {PageJsonState, SelectObjType, ObjectAny, PageStyleType} from './index.d';
 const positionKeyArr = ['x', 'y'];
 const firstAttrKeyArr = ['value', 'animateList'];
 interface initStateType {
@@ -9,6 +9,7 @@ interface initStateType {
   selectIndexFix: number;
   compFixJson: Array<PageJsonState>;
   selectObj: SelectObjType;
+  pageStyle: PageStyleType;
 }
 
 const initialState: initStateType = {
@@ -31,6 +32,9 @@ const initialState: initStateType = {
       y: 0,
     },
     animateList: [],
+  },
+  pageStyle: {
+    background: '',
   },
 };
 
@@ -65,10 +69,13 @@ export const pageJosnSlice = createSlice({
     setSelectObj: (state, action: PayloadAction<SelectObjType>) => {
       state.selectObj = action.payload;
     },
+    setPageStyle: (state, action: PayloadAction<PageStyleType>) => {
+      state.pageStyle = action.payload;
+    },
   },
 });
 
-export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj} = pageJosnSlice.actions;
+export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj, setPageStyle} = pageJosnSlice.actions;
 
 export const setSelectIndex =
   (index: number): AppThunk =>

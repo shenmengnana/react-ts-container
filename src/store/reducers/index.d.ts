@@ -34,3 +34,7 @@ export interface SelectObjType extends PageJsonState {
   compType: string; // static  fix
   index: number;
 }
+
+export interface PageStyleType extends ObjectAny {
+  background: string;
+}

@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState, useRef, forwardRef, useImperativeHandle} from 'react';
 import {Button, Space, Collapse, Form, InputNumber, Divider} from 'antd';
-import './index.less';
+import '../index.less';
 import {CaretRightOutlined, DeleteOutlined} from '@ant-design/icons';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {update} from '@/store/reducers/global';

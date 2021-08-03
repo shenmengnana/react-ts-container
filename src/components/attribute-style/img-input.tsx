@@ -12,7 +12,7 @@ function getBase64(originFileObj: RcFile, callback: callbackType) {
   reader.readAsDataURL(originFileObj);
 }
 
-const ImgInput = ({form, maxSize = 600, update, src}: {form: FormInstance; maxSize?: number; update: callbackType; src: string}) => {
+const ImgInput = ({label, form, maxSize = 600, update, src}: {label?: string; form: FormInstance; maxSize?: number; update: callbackType; src: string}) => {
   const [imgUrl, setimgUrl] = useState('');
   const imgChange = (info: UploadChangeParam) => {
     if (info.file.status !== 'uploading') {
@@ -42,7 +42,7 @@ const ImgInput = ({form, maxSize = 600, update, src}: {form: FormInstance; maxSi
   }, [src]);
   return (
     <Space align="start">
-      <Form.Item label="图片地址" name="value">
+      <Form.Item label={label || '图片地址'} name="value">
         <Input.TextArea style={{height: '104px'}} />
       </Form.Item>
       <Upload

@@ -6,6 +6,7 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {setCompFixJson, setPageJson, setSelectIndex, setSelectIndexFix, setSelectObj} from '@/store/reducers/global';
 import {Rnd, RndDragCallback, RndResizeCallback} from 'react-rnd';
+import {url} from 'inspector';
 const PreviewContent: FC = () => {
   const dispatch = useAppDispatch();
   const pageJson = useAppSelector(state => state.global['pageJson']);
@@ -13,6 +14,7 @@ const PreviewContent: FC = () => {
   const selectIndex = useAppSelector(state => state.global['selectIndex']);
   const selectIndexFix = useAppSelector(state => state.global['selectIndexFix']);
   const selectObj = useAppSelector(state => state.global['selectObj']);
+  const pageStyle = useAppSelector(state => state.global['pageStyle']);
   const previewContentRef = useRef<HTMLDivElement>(null);
   const inputRefs: Array<any> = useMemo(
     () =>
@@ -74,55 +76,56 @@ const PreviewContent: FC = () => {
     dispatch(setSelectIndexFix(compFixJson.length - 1));
     dispatch(setSelectIndex(-1));
   }, [compFixJson.length]);
-
   return (
     <div className="preview-content" ref={previewContentRef}>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided: any, snapshot: any) => (
-            <div ref={provided.innerRef} style={{backgroundColor: snapshot.isDraggingOver ? 'rgba(64,169,255,.4)' : ''}} {...provided.droppableProps}>
-              {pageJson.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided: any, snapshot: any) => (
-                    <div className="drag-wrap" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                      <div
-                        style={item.style}
-                        className={`comp-wrap ${selectIndex === index ? 'comp-seleted' : ''}`}
-                        onClick={() => {
-                          dispatch(setSelectIndexFix(-1));
-                          dispatch(setSelectIndex(index));
-                        }}
-                      >
-                        {CompRender(item, index)}
+      <div className="preview-content-cont" style={{...pageStyle}}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable" style={{backgroundColor: 'red'}}>
+            {(provided: any, snapshot: any) => (
+              <div ref={provided.innerRef} style={{backgroundColor: snapshot.isDraggingOver ? 'rgba(64,169,255,.4)' : ''}} {...provided.droppableProps}>
+                {pageJson.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided: any, snapshot: any) => (
+                      <div className="drag-wrap" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <div
+                          style={item.style}
+                          className={`comp-wrap ${selectIndex === index ? 'comp-seleted' : ''}`}
+                          onClick={() => {
+                            dispatch(setSelectIndexFix(-1));
+                            dispatch(setSelectIndex(index));
+                          }}
+                        >
+                          {CompRender(item, index)}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      {compFixJson.map((item, index) => (
-        <Rnd
-          ref={inputRefs[index]}
-          id={item.id}
-          style={{position: item.type === 'fix' ? 'fixed' : 'absolute'}}
-          size={{width: item.style.width, height: item.style.height}}
-          position={{...item.position}}
-          // default={{...item.position, width: item.style.width, height: item.style.height}}
-          key={item.id}
-          bounds={item.type === 'fix' ? '.preview-content' : ''}
-          className={`comp-fix ${selectIndexFix === index ? 'comp-fix-seleted' : ''}`}
-          onMouseDown={() => {
-            dispatch(setSelectIndex(-1));
-            dispatch(setSelectIndexFix(index));
-          }}
-          onDragStop={rndDragStop}
-          onResizeStop={rndResizeStop}
-        ></Rnd>
-      ))}
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {compFixJson.map((item, index) => (
+          <Rnd
+            ref={inputRefs[index]}
+            id={item.id}
+            style={{position: item.type === 'fix' ? 'fixed' : 'absolute'}}
+            size={{width: item.style.width, height: item.style.height}}
+            position={{...item.position}}
+            // default={{...item.position, width: item.style.width, height: item.style.height}}
+            key={item.id}
+            bounds={item.type === 'fix' ? '.preview-content' : ''}
+            className={`comp-fix ${selectIndexFix === index ? 'comp-fix-seleted' : ''}`}
+            onMouseDown={() => {
+              dispatch(setSelectIndex(-1));
+              dispatch(setSelectIndexFix(index));
+            }}
+            onDragStop={rndDragStop}
+            onResizeStop={rndResizeStop}
+          ></Rnd>
+        ))}
+      </div>
     </div>
   );
 };
