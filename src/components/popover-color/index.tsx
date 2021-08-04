@@ -5,7 +5,7 @@ import './index.less';
 export interface colorType {
   rgb: rgbColorType;
 }
-interface rgbColorType {
+export interface rgbColorType {
   r: number;
   g: number;
   b: number;

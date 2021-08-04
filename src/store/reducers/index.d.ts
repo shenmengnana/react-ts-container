@@ -36,5 +36,5 @@ export interface SelectObjType extends PageJsonState {
 }
 
 export interface PageStyleType extends ObjectAny {
-  backgroundColor: string;
+  backgroundColor?: string;
 }

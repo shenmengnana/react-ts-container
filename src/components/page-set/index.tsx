@@ -1,36 +1,92 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Form, Radio, Checkbox} from 'antd';
+import {Form, Radio, Button, Space, message} from 'antd';
 import './index.less';
 import ImgInput from '../attribute-style/img-input';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {useDebounceFn} from 'ahooks';
 import {setPageStyle} from '@/store/reducers/global';
 import {ObjectAny, SelectObjType, PageStyleType} from '@/store/reducers/index.d';
-import PopoverColor, {colorType} from '../popover-color';
+import PopoverColor, {colorType, rgbColorType} from '../popover-color';
 const PageSet: FC = () => {
   const [imgSrc, setimgSrc] = useState('');
-  const [color, setColor] = useState({r: 255, g: 255, b: 255, a: 1});
+  const [colorArr, setcolorArr] = useState<Array<rgbColorType>>([{r: 255, g: 255, b: 255, a: 1}]);
   const dispatch = useAppDispatch();
   const pageStyle = useAppSelector(state => state.global.pageStyle);
   const [form] = Form.useForm();
   const attributeChange = useDebounceFn(
     (e: PageStyleType) => {
-      e.backgroundImage && setimgSrc(e.backgroundImage);
+      if (e.backgroundColors) {
+        dispatch(setPageStyle({...pageStyle, backgroundImage: e.backgroundColors, backgroundColor: ''}));
+        return;
+      }
+      if (e.backgroundImage) {
+        setimgSrc(e.backgroundImage);
+        dispatch(setPageStyle({...pageStyle, backgroundImage: `url(${e.backgroundImage})`}));
+        return;
+      }
       dispatch(setPageStyle({...pageStyle, ...e}));
     },
     {wait: 500},
   );
-  const handleChange = (color: colorType) => {
-    setColor(color.rgb);
-    attributeChange.run({backgroundColor: `rgba(${Object.values(color.rgb)})`});
+  const handleChange = (color: colorType, index: number) => {
+    let colors = [...colorArr];
+    colors[index] = color.rgb;
+    setcolorArr(colors);
+    let obj = {};
+    if (colors.length > 1) {
+      obj = {backgroundColors: `linear-gradient(${colors.map(c => `rgba(${Object.values(c)})`)})`};
+    } else {
+      obj = {backgroundColor: `rgba(${Object.values(color.rgb)})`};
+    }
+    // background-image: linear-gradient(#e66465, #9198e5);
+    attributeChange.run(obj);
   };
-  const normColor = (e: any) => {
+  const normColor = (e: colorType) => {
     return `rgba(${Object.values(e.rgb)})`;
   };
+  const addColor = (type: number) => {
+    let colors = [...colorArr];
+    if (type === -1) {
+      colors.pop();
+    } else {
+      colors.push({r: 255, g: 255, b: 255, a: 1});
+    }
+    setcolorArr(colors);
+  };
+
   return (
     <div className="page-set">
       <Form.Item label="背景颜色" name="backgroundColor" valuePropName="rgb" getValueFromEvent={normColor}>
-        <PopoverColor value={color} onChange={handleChange}></PopoverColor>
+        <Space>
+          {colorArr.map((item, index) => (
+            <PopoverColor
+              value={item}
+              onChange={e => {
+                handleChange(e, index);
+              }}
+            ></PopoverColor>
+          ))}
+          {colorArr.length < 4 && (
+            <div
+              className="add-color flex-center-center"
+              onClick={() => {
+                addColor(1);
+              }}
+            >
+              +
+            </div>
+          )}
+          {colorArr.length > 1 && (
+            <div
+              className="add-color flex-center-center"
+              onClick={() => {
+                addColor(-1);
+              }}
+            >
+              -
+            </div>
+          )}
+        </Space>
       </Form.Item>
       <Form form={form} onValuesChange={attributeChange.run}>
         <ImgInput label="背景图片" name="backgroundImage" form={form} update={attributeChange.run} src={imgSrc}></ImgInput>

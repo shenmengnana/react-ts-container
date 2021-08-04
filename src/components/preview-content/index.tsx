@@ -84,7 +84,7 @@ const PreviewContent: FC = () => {
         className="preview-content-cont"
         style={{
           backgroundColor: pageStyle.backgroundColor,
-          backgroundImage: `url(${pageStyle.backgroundImage})`,
+          backgroundImage: pageStyle.backgroundImage,
           backgroundSize: pageStyle.backgroundSize,
           backgroundRepeat: pageStyle.backgroundRepeat,
         }}
