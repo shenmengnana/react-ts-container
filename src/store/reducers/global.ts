@@ -34,7 +34,7 @@ const initialState: initStateType = {
     animateList: [],
   },
   pageStyle: {
-    background: '',
+    backgroundColor: '',
   },
 };
 

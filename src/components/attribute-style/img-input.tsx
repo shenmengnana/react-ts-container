@@ -12,19 +12,18 @@ function getBase64(originFileObj: RcFile, callback: callbackType) {
   reader.readAsDataURL(originFileObj);
 }
 
-const ImgInput = ({label, form, maxSize = 600, update, src}: {label?: string; form: FormInstance; maxSize?: number; update: callbackType; src: string}) => {
+const ImgInput = ({label, name = 'value', form, maxSize = 600, update, src}: {label?: string; name?: string; form: FormInstance; maxSize?: number; update: callbackType; src: string}) => {
   const [imgUrl, setimgUrl] = useState('');
   const imgChange = (info: UploadChangeParam) => {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
     }
     if (info.file.status === 'done') {
       message.success(`${info.file.name} file uploaded successfully`);
       info.file.originFileObj &&
         getBase64(info.file.originFileObj, imageUrl => {
           setimgUrl(imageUrl);
-          form.setFieldsValue({value: imageUrl});
-          update({value: imageUrl});
+          form.setFieldsValue({[name]: imageUrl});
+          update({[name]: imageUrl});
         });
     } else if (info.file.status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
@@ -42,7 +41,7 @@ const ImgInput = ({label, form, maxSize = 600, update, src}: {label?: string; fo
   }, [src]);
   return (
     <Space align="start">
-      <Form.Item label={label || '图片地址'} name="value">
+      <Form.Item label={label || '图片地址'} name={name}>
         <Input.TextArea style={{height: '104px'}} />
       </Form.Item>
       <Upload

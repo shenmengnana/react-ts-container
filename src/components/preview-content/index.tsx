@@ -76,9 +76,19 @@ const PreviewContent: FC = () => {
     dispatch(setSelectIndexFix(compFixJson.length - 1));
     dispatch(setSelectIndex(-1));
   }, [compFixJson.length]);
+  console.log(1112, pageStyle);
+
   return (
     <div className="preview-content" ref={previewContentRef}>
-      <div className="preview-content-cont" style={{...pageStyle}}>
+      <div
+        className="preview-content-cont"
+        style={{
+          backgroundColor: pageStyle.backgroundColor,
+          backgroundImage: `url(${pageStyle.backgroundImage})`,
+          backgroundSize: pageStyle.backgroundSize,
+          backgroundRepeat: pageStyle.backgroundRepeat,
+        }}
+      >
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable" style={{backgroundColor: 'red'}}>
             {(provided: any, snapshot: any) => (
