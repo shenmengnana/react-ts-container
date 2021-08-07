@@ -12,7 +12,7 @@ function getBase64(originFileObj: RcFile, callback: callbackType) {
   reader.readAsDataURL(originFileObj);
 }
 
-const ImgInput = ({label, name = 'value', form, maxSize = 600, update, src}: {label?: string; name?: string; form: FormInstance; maxSize?: number; update: callbackType; src: string}) => {
+const ImgInput = ({label, name = 'value', form, maxSize = 600, upload, src}: {label?: string; name?: string; form: FormInstance; maxSize?: number; upload: callbackType; src: string}) => {
   const [imgUrl, setimgUrl] = useState('');
   const imgChange = (info: UploadChangeParam) => {
     if (info.file.status !== 'uploading') {
@@ -23,7 +23,7 @@ const ImgInput = ({label, name = 'value', form, maxSize = 600, update, src}: {la
         getBase64(info.file.originFileObj, imageUrl => {
           setimgUrl(imageUrl);
           form.setFieldsValue({[name]: imageUrl});
-          update({[name]: imageUrl});
+          upload({[name]: imageUrl});
         });
     } else if (info.file.status === 'error') {
       message.error(`${info.file.name} file upload failed.`);

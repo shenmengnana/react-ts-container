@@ -157,6 +157,8 @@ export const update =
           ...info,
         };
       }
+      console.log(66, style);
+
       current.style = style;
       list[selectObj.index] = current;
       dispatch(setPageJson(list));

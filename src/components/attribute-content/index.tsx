@@ -8,7 +8,7 @@ const {TabPane} = Tabs;
 const AttributeContent: FC = () => {
   const tabChange = () => {};
   return (
-    <Tabs defaultActiveKey="2" onChange={tabChange} className="attribute-content">
+    <Tabs defaultActiveKey="1" onChange={tabChange} className="attribute-content">
       <TabPane tab="属性" key="1">
         <AttributeStyle></AttributeStyle>
       </TabPane>

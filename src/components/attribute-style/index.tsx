@@ -7,6 +7,7 @@ import Href from './href';
 import TextInput from './text-input';
 import ImgInput from './img-input';
 import Font from './font';
+import Background from './background';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {setPageJson, setCompFixJson, update} from '@/store/reducers/global';
 import {ObjectAny, SelectObjType} from '@/store/reducers/index.d';
@@ -17,7 +18,8 @@ const AttributeStyle: FC = () => {
   const selectObj = useAppSelector(state => state.global.selectObj);
   const [form] = Form.useForm();
   const attributeChange = useDebounceFn(
-    (e: SelectObjType) => {
+    (e: ObjectAny) => {
+      if (selectObj.index === -1) return;
       let key: string = Object.keys(e)[0];
       if (!key) return;
       if (selectObj.type === 'img' && key === 'value') {
@@ -44,11 +46,12 @@ const AttributeStyle: FC = () => {
     <div className="attribute-style">
       <Form form={form} name="attributeForm" onValuesChange={attributeChange.run}>
         {selectObj.type === 'text' && <TextInput></TextInput>}
-        {selectObj.type === 'img' && <ImgInput form={form} update={attributeChange.run} src={imgSrc}></ImgInput>}
+        {selectObj.type === 'img' && <ImgInput form={form} upload={attributeChange.run} src={imgSrc}></ImgInput>}
         <Size></Size>
         <Position></Position>
         <Href></Href>
         <Font></Font>
+        <Background form={form} upload={attributeChange.run}></Background>
       </Form>
     </div>
   );

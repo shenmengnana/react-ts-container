@@ -14,7 +14,7 @@ export interface AnimateListType extends AnimateChilrenType {
 export interface PageJsonState {
   id: string;
   type: string;
-  value: string;
+  value: string | any;
   position: {
     x: number;
     y: number;
