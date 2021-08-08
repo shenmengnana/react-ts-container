@@ -57,11 +57,12 @@ const PreviewContent: FC = () => {
   const rndResizeStop: RndResizeCallback = (e, direction, ref, delta, position) => {
     console.log('rndResizeStop', ref.style, position);
     let style = {width: parseInt(ref.style.width), height: parseInt(ref.style.height)};
-    dispatch(setSelectObj({...selectObj, style}));
+    dispatch(setSelectObj({...selectObj, style, position}));
     let list = JSON.parse(JSON.stringify(compFixJson));
     list[selectIndexFix] = {
       ...list[selectIndexFix],
       style,
+      position,
     };
     dispatch(setCompFixJson(list));
   };

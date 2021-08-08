@@ -6,6 +6,7 @@ import CusHeader from '@/components/custom-header';
 import ComponentsLib from '@/components/comp-libs';
 import PreviewContent from '@/components/preview-content';
 import AttributeContent from '@/components/attribute-content';
+
 const {Header, Sider, Content} = Layout;
 
 const Index: FC = () => {
