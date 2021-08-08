@@ -3,16 +3,24 @@ import './index.less';
 import {Form, Space, Input, Upload, message} from 'antd';
 import {UploadChangeParam, RcFile} from 'antd/lib/upload';
 import {FormInstance} from 'rc-field-form';
-interface callbackType {
+interface CallbackType {
   (result: any): void;
 }
-function getBase64(originFileObj: RcFile, callback: callbackType) {
+interface ImgInputProps {
+  label?: string;
+  name?: string;
+  form: FormInstance;
+  maxSize?: number;
+  upload: CallbackType;
+  src: string;
+}
+function getBase64(originFileObj: RcFile, callback: CallbackType) {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(originFileObj);
 }
 
-const ImgInput = ({label, name = 'value', form, maxSize = 600, upload, src}: {label?: string; name?: string; form: FormInstance; maxSize?: number; upload: callbackType; src: string}) => {
+const ImgInput = ({label, name = 'value', form, maxSize = 600, upload, src}: ImgInputProps) => {
   const [imgUrl, setimgUrl] = useState('');
   const imgChange = (info: UploadChangeParam) => {
     if (info.file.status !== 'uploading') {
@@ -36,13 +44,19 @@ const ImgInput = ({label, name = 'value', form, maxSize = 600, upload, src}: {la
     }
     return isLimit;
   };
+  const textareaChange = (e: any) => {
+    if (!e.target.value) {
+      setimgUrl('');
+      upload({[name]: ''});
+    }
+  };
   useEffect(() => {
     setimgUrl(src);
   }, [src]);
   return (
     <Space align="start">
       <Form.Item label={label || '图片地址'} name={name}>
-        <Input.TextArea style={{height: '104px'}} />
+        <Input.TextArea style={{height: '104px'}} onChange={textareaChange} />
       </Form.Item>
       <Upload
         name="image"

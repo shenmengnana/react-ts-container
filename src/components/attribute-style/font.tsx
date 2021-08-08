@@ -3,9 +3,9 @@ import './index.less';
 import {Form, Space, InputNumber, Radio} from 'antd';
 import PopoverColor, {colorType} from '../popover-color';
 const Font = () => {
-  const [color, setColor] = useState({r: 0, g: 0, b: 0, a: 1});
+  const [color, setColor] = useState('rgba(0,0,0,1)');
   const handleChange = (color: colorType) => {
-    setColor(color.rgb);
+    setColor(`rgba(${Object.values(color.rgb)})`);
   };
   const normColor = (e: any) => {
     return `rgba(${Object.values(e.rgb)})`;

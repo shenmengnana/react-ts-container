@@ -17,9 +17,8 @@ const PageSet: FC = () => {
     },
     {wait: 500},
   );
-
   return (
-    <Form form={form} className="page-set">
+    <Form form={form} className="page-set" onValuesChange={attributeChange.run}>
       <Background form={form} upload={attributeChange.run}></Background>
     </Form>
   );

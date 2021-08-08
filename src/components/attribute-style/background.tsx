@@ -10,11 +10,10 @@ import PopoverColor, {colorType, rgbColorType} from '../popover-color';
 import {BackgroundProps} from './index.d';
 const Background = ({form, upload}: BackgroundProps) => {
   const [imgSrc, setimgSrc] = useState('');
-  const [colorArr, setcolorArr] = useState<Array<rgbColorType>>([{r: 255, g: 255, b: 255, a: 1}]);
-  const {selectObj} = useAppSelector(state => state.global);
+  const [colorArr, setcolorArr] = useState<Array<string>>(['rgba(255,255,255,1)']);
   const handleChange = (color: colorType, index: number) => {
     let colors = [...colorArr];
-    colors[index] = color.rgb;
+    colors[index] = `rgba(${Object.values(color.rgb)})`;
     setcolorArr(colors);
   };
   const normColor = (e: colorType) => {
@@ -25,7 +24,7 @@ const Background = ({form, upload}: BackgroundProps) => {
     if (type === -1) {
       colors.pop();
     } else {
-      colors.push({r: 255, g: 255, b: 255, a: 1});
+      colors.push('rgba(255,255,255,1)');
     }
     setcolorArr(colors);
   };
@@ -39,14 +38,13 @@ const Background = ({form, upload}: BackgroundProps) => {
   useEffect(() => {
     let obj: any = {};
     if (colorArr.length > 1) {
-      obj = {backgroundImage: `linear-gradient(${colorArr.map(c => `rgba(${Object.values(c)})`)})`};
+      obj = {backgroundImage: `linear-gradient(${colorArr.join(',')})`};
     } else {
-      obj = {backgroundColor: `rgba(${Object.values(colorArr[0])})`, backgroundImage: ''};
+      obj = {backgroundColor: colorArr[0], backgroundImage: ''};
       if (imgSrc) {
         obj.backgroundImage = `url(${imgSrc})`;
       }
     }
-    console.log(11123, upload);
     upload(obj);
   }, [colorArr]);
   return (
