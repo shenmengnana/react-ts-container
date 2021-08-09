@@ -6,7 +6,7 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import {useAppSelector, useAppDispatch} from '@/store';
 import {setCompFixJson, setPageJson, setSelectIndex, setSelectIndexFix, setSelectObj} from '@/store/reducers/global';
 import {Rnd, RndDragCallback, RndResizeCallback} from 'react-rnd';
-import {url} from 'inspector';
+import ElementActions from './components/element-actions';
 const PreviewContent: FC = () => {
   const dispatch = useAppDispatch();
   const pageJson = useAppSelector(state => state.global['pageJson']);
@@ -79,6 +79,9 @@ const PreviewContent: FC = () => {
   }, [compFixJson.length]);
   return (
     <div className="preview-content" ref={previewContentRef}>
+      <div className="element-actions-wrap">
+        <ElementActions></ElementActions>
+      </div>
       <div
         className="preview-content-cont"
         style={{

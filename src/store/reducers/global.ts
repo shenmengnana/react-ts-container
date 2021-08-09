@@ -54,6 +54,9 @@ export const pageJosnSlice = createSlice({
     addPageJson: (state, action: PayloadAction<PageJsonState>) => {
       state.pageJson.push(action.payload);
     },
+    addPageOrCompJson: (state, action: PayloadAction<PageJsonState>) => {
+      console.log(state.selectObj.compType);
+    },
     delPageJson: (state, action: PayloadAction<number>) => {
       state.pageJson.splice(action.payload, 1);
     },
@@ -75,7 +78,7 @@ export const pageJosnSlice = createSlice({
   },
 });
 
-export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj, setPageStyle} = pageJosnSlice.actions;
+export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj, setPageStyle, addPageOrCompJson} = pageJosnSlice.actions;
 
 export const setSelectIndex =
   (index: number): AppThunk =>
