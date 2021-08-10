@@ -54,9 +54,7 @@ export const pageJosnSlice = createSlice({
     addPageJson: (state, action: PayloadAction<PageJsonState>) => {
       state.pageJson.push(action.payload);
     },
-    addPageOrCompJson: (state, action: PayloadAction<PageJsonState>) => {
-      console.log(state.selectObj.compType);
-    },
+
     delPageJson: (state, action: PayloadAction<number>) => {
       state.pageJson.splice(action.payload, 1);
     },
@@ -78,8 +76,31 @@ export const pageJosnSlice = createSlice({
   },
 });
 
-export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj, setPageStyle, addPageOrCompJson} = pageJosnSlice.actions;
+export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj, setPageStyle} = pageJosnSlice.actions;
 
+export const addPageOrCompJson =
+  (payload?: SelectObjType): AppThunk =>
+  (dispatch, getState) => {
+    const {selectObj, pageJson, compFixJson} = getState().global;
+    payload = (payload || selectObj) as SelectObjType;
+    console.log(1, payload);
+
+    if (payload.compType === 'static') {
+      dispatch(
+        addPageJson({
+          ...payload,
+          id: `comp${pageJson.length + 1}`,
+        }),
+      );
+    } else {
+      dispatch(
+        addCompFixJson({
+          ...payload,
+          id: `comp${compFixJson.length + 1}`,
+        }),
+      );
+    }
+  };
 export const setSelectIndex =
   (index: number): AppThunk =>
   (dispatch, getState) => {
@@ -160,8 +181,6 @@ export const update =
           ...info,
         };
       }
-      console.log(66, style);
-
       current.style = style;
       list[selectObj.index] = current;
       dispatch(setPageJson(list));

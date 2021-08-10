@@ -77,6 +77,8 @@ const PreviewContent: FC = () => {
     dispatch(setSelectIndexFix(compFixJson.length - 1));
     dispatch(setSelectIndex(-1));
   }, [compFixJson.length]);
+  console.log(5, pageJson.length);
+
   return (
     <div className="preview-content" ref={previewContentRef}>
       <div className="element-actions-wrap">

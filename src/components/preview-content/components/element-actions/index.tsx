@@ -26,7 +26,7 @@ const ElementActions = () => {
     }
   };
   const copyAction = () => {
-    dispatch(addPageOrCompJson(selectObj));
+    dispatch(addPageOrCompJson());
   };
   const delAction = () => {
     console.log(2);
