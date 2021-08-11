@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {Layout} from 'antd';
 import './index.less';
 import CompLibs, {CompLibsTypes} from '@libs/index';
-import {addPageOrCompJson, addCompFixJson} from '@/store/reducers/global';
+import {addPageData, addCompFixJson} from '@/store/reducers/global';
 import {useAppSelector, useAppDispatch} from '@/store';
 import compInitMap, {compFixArr} from '@libs/const';
 const ComponentsLib: FC = () => {
@@ -14,7 +14,7 @@ const ComponentsLib: FC = () => {
       compType: compFixArr.includes(type) ? 'fix' : 'static',
       ...compInitMap[type],
     };
-    dispatch(addPageOrCompJson(obj));
+    dispatch(addPageData(obj));
   };
   return (
     <div className="components-lib-wrap">

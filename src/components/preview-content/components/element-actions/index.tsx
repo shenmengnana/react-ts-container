@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './index.less';
 import {Tooltip} from 'antd';
 import {CopyOutlined, DeleteOutlined, RiseOutlined, FallOutlined, VerticalAlignTopOutlined, VerticalAlignBottomOutlined} from '@ant-design/icons';
-import {addPageJson, addPageOrCompJson} from '@/store/reducers/global';
+import {addPageJson, addPageData, delPageData} from '@/store/reducers/global';
 import {useAppSelector, useAppDispatch} from '@/store';
 import compInitMap, {compFixArr} from '@libs/const';
 const actionsArr = [
@@ -20,16 +20,10 @@ const ElementActions = () => {
   const handleAction = (type: string) => {
     switch (type) {
       case 'copy':
-        return copyAction();
+        return dispatch(addPageData());
       case 'del':
-        return delAction();
+        return dispatch(delPageData());
     }
-  };
-  const copyAction = () => {
-    dispatch(addPageOrCompJson());
-  };
-  const delAction = () => {
-    console.log(2);
   };
   return (
     <div className="element-actions">

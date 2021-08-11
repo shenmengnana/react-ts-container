@@ -54,8 +54,9 @@ export const pageJosnSlice = createSlice({
     addPageJson: (state, action: PayloadAction<PageJsonState>) => {
       state.pageJson.push(action.payload);
     },
-
     delPageJson: (state, action: PayloadAction<number>) => {
+      console.log(1111, action);
+      
       state.pageJson.splice(action.payload, 1);
     },
     setCompFixJson: (state, action: PayloadAction<Array<PageJsonState>>) => {
@@ -76,15 +77,13 @@ export const pageJosnSlice = createSlice({
   },
 });
 
-export const {setPageJson, addPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson, setSelectObj, setPageStyle} = pageJosnSlice.actions;
+export const {setPageJson, addPageJson,delPageJson, setCompFixJson, setSelectIndexFn, setSelectIndexFixFn, addCompFixJson,delCompFixJson, setSelectObj, setPageStyle} = pageJosnSlice.actions;
 
-export const addPageOrCompJson =
+export const addPageData =
   (payload?: SelectObjType): AppThunk =>
   (dispatch, getState) => {
     const {selectObj, pageJson, compFixJson} = getState().global;
     payload = (payload || selectObj) as SelectObjType;
-    console.log(1, payload);
-
     if (payload.compType === 'static') {
       dispatch(
         addPageJson({
@@ -99,6 +98,16 @@ export const addPageOrCompJson =
           id: `comp${compFixJson.length + 1}`,
         }),
       );
+    }
+  };
+export const delPageData =
+  (): AppThunk =>
+  (dispatch, getState) => {
+    const {selectObj} = getState().global;
+    if (selectObj.compType === 'static') {
+      dispatch(delPageJson(selectObj.index));
+    } else {
+      dispatch(delCompFixJson(selectObj.index));
     }
   };
 export const setSelectIndex =
